@@ -129,7 +129,7 @@ fun ResultScreen(nombre: String, imc: String, navController: androidx.navigation
     val (categoria, colorCategoria) = when {
         imcValue < 18.5 -> "Bajo peso" to Color.Red
         imcValue < 24.9 -> "Peso normal" to Color.Green
-        imcValue < 29.9 -> "Sobrepeso" to Color(0xFFFFA500) // Naranja
+        imcValue < 29.9 -> "Sobrepeso" to Color(0xFFFFA500)
         else -> "Obesidad" to Color.Red
     }
 
@@ -159,5 +159,4 @@ fun ResultScreen(nombre: String, imc: String, navController: androidx.navigation
             Text("Volver")
         }
     }
-}
 }
