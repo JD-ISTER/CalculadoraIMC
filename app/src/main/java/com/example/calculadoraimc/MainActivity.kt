@@ -46,7 +46,6 @@ fun AppNavigation() {
 
 @Composable
 fun InputScreen(navController: androidx.navigation.NavController) {
-    // Estados iniciales (se explican en el siguiente paso)
     var nombre by remember { mutableStateOf("") }
     var peso by remember { mutableStateOf("") }
     var altura by remember { mutableStateOf("") }
@@ -92,14 +91,27 @@ fun InputScreen(navController: androidx.navigation.NavController) {
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Mensaje de validación (RETO 1)
         if (mensajeError.isNotEmpty()) {
             Text(text = mensajeError, color = Color.Red, modifier = Modifier.padding(bottom = 8.dp))
         }
 
         Button(
             onClick = {
-                // Aquí irá la lógica de validación y navegación
+                mensajeError = ""
+
+                val pesoDouble = peso.toDoubleOrNull()
+                val alturaDouble = altura.toDoubleOrNull()
+
+                if (pesoDouble == null || alturaDouble == null || pesoDouble <= 0 || alturaDouble <= 0) {
+                    mensajeError = "Por favor, ingresa valores válidos"
+                    return@Button
+                }
+
+                val imcCalculado = pesoDouble / (alturaDouble * alturaDouble)
+                val imcFormateado = String.format("%.1f", imcCalculado)
+
+                val nombreCodificado = nombre.replace(" ", "%20")
+                navController.navigate("resultado/$nombreCodificado/$imcFormateado")
             },
             modifier = Modifier.fillMaxWidth()
         ) {
