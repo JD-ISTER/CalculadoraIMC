@@ -42,4 +42,69 @@ fun AppNavigation() {
             ResultScreen(nombre = nombre, imc = imc, navController = navController)
         }
     }
-}}
+}
+
+@Composable
+fun InputScreen(navController: androidx.navigation.NavController) {
+    // Estados iniciales (se explican en el siguiente paso)
+    var nombre by remember { mutableStateOf("") }
+    var peso by remember { mutableStateOf("") }
+    var altura by remember { mutableStateOf("") }
+    var mensajeError by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text("Calculadora IMC", fontSize = 28.sp, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(24.dp))
+
+        OutlinedTextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+
+        OutlinedTextField(
+            value = peso,
+            onValueChange = { peso = it },
+            label = { Text("Peso (kg)") },
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = androidx.compose.foundation.text.KeyboardOptions.Default.copy(
+                keyboardType = androidx.compose.ui.text.input.KeyboardType.Number
+            )
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+
+        OutlinedTextField(
+            value = altura,
+            onValueChange = { altura = it },
+            label = { Text("Altura (m)") },
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = androidx.compose.foundation.text.KeyboardOptions.Default.copy(
+                keyboardType = androidx.compose.ui.text.input.KeyboardType.Number
+            )
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Mensaje de validación (RETO 1)
+        if (mensajeError.isNotEmpty()) {
+            Text(text = mensajeError, color = Color.Red, modifier = Modifier.padding(bottom = 8.dp))
+        }
+
+        Button(
+            onClick = {
+                // Aquí irá la lógica de validación y navegación
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Calcular")
+        }
+    }
+}
+}
