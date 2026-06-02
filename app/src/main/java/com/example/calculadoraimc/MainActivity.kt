@@ -119,4 +119,45 @@ fun InputScreen(navController: androidx.navigation.NavController) {
         }
     }
 }
+
+@Composable
+fun ResultScreen(nombre: String, imc: String, navController: androidx.navigation.NavController) {
+    val imcValue = imc.toDoubleOrNull() ?: 0.0
+
+    val nombreMostrar = nombre.replace("%20", " ")
+
+    val (categoria, colorCategoria) = when {
+        imcValue < 18.5 -> "Bajo peso" to Color.Red
+        imcValue < 24.9 -> "Peso normal" to Color.Green
+        imcValue < 29.9 -> "Sobrepeso" to Color(0xFFFFA500) // Naranja
+        else -> "Obesidad" to Color.Red
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text("Hola $nombreMostrar, tu resultado es:", fontSize = 20.sp)
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text("IMC: $imc", fontSize = 32.sp, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            text = categoria,
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Bold,
+            color = colorCategoria
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        Button(onClick = { navController.popBackStack() }) {
+            Text("Volver")
+        }
+    }
+}
 }
